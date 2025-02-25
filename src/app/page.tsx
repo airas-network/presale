@@ -35,13 +35,12 @@ export default function Home() {
 
   const description = contractMetadataQuery.data?.description;
 
-  const loadingClaimConditions = claimCondition20.isLoading || claimCondition20.isRefetching
+  const loadingClaimConditions =
+    claimCondition20.isLoading || claimCondition20.isRefetching;
   const priceInWei = claimCondition20.data?.pricePerToken;
   const supplyClaimed = claimCondition20.data?.supplyClaimed;
   const totalSupply = claimCondition20.data?.maxClaimableSupply;
   const currency = claimCondition20.data?.currency;
-
-  console.log("Supply claimed", supplyClaimed, totalSupply);
   const currencyContract = getContract({
     address: currency || "",
     chain,
@@ -73,7 +72,7 @@ export default function Home() {
       tokenId={tokenId}
       totalSupply={totalSupply!}
       supplyClaimed={supplyClaimed!}
-	  loadingClaimConditions={loadingClaimConditions}
+      loadingClaimConditions={loadingClaimConditions}
     />
   );
 }
