@@ -203,7 +203,7 @@ export function NftMint(props: Props) {
                 width: "100%",
               }}
               disabled={isMinting}
-              onTransactionSent={() => toast.info("Minting NFT")}
+              onTransactionSent={() => toast.info("Minting $AIRAS")}
               onTransactionConfirmed={() =>
                 toast.success("Minted successfully")
               }
