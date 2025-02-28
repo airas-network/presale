@@ -55,7 +55,15 @@ export function NftMint(props: Props) {
   };
 
   const increaseQuantity = () => {
-    setQuantity((prev) => Math.min(prev + 1000000, MAX_BUY_IN)); // Assuming a max of 10 NFTs can be minted at once
+    setQuantity((prev) =>
+      Math.min(
+        prev + 1000000,
+        Math.min(
+          Number(props.totalSupply) - Number(props.supplyClaimed),
+          MAX_BUY_IN
+        )
+      )
+    );
   };
 
   const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -127,7 +135,13 @@ export function NftMint(props: Props) {
                 value={quantity}
                 onChange={handleQuantityChange}
                 className="w-28 text-center rounded-none border-x-0 pl-6"
-                min="1"
+                min={MIN_BUY_IN}
+                max={Math.min(
+                  Number(props.totalSupply) - Number(props.supplyClaimed),
+                  MAX_BUY_IN
+                )}
+                step={1000000}
+                readOnly
               />
               <Button
                 variant="outline"
@@ -141,9 +155,21 @@ export function NftMint(props: Props) {
             </div>
             <Button
               variant={"outline"}
-              disabled={isMaxBuyIn && quantity == MAX_BUY_IN}
+              disabled={
+                isMaxBuyIn &&
+                quantity ==
+                  Math.min(
+                    Number(props.totalSupply) - Number(props.supplyClaimed),
+                    MAX_BUY_IN
+                  )
+              }
               onClick={() => {
-                setQuantity(MAX_BUY_IN);
+                setQuantity(
+                  Math.min(
+                    Number(props.totalSupply) - Number(props.supplyClaimed),
+                    MAX_BUY_IN
+                  )
+                );
                 setIsMaxBuyIn(true);
               }}
             >
